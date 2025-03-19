@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Global } from "@emotion/react";
+import { globalStyles } from "./styles/globalStyles";
+import useSudoku from "./hooks/useSudoku";
+import Board from "./components/Board";
+import Controls from "./components/Controls";
+import NumberPad from "./components/NumberPad";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { board, resetBoard, difficulty, setDifficulty } = useSudoku();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Global styles={globalStyles} />
+      <div className="container">
+        <h1 className="title">Let's Play Sudoku</h1>
+        <Controls
+          resetBoard={resetBoard}
+          difficulty={difficulty}
+          setDifficulty={setDifficulty}
+        />
+        <Board board={board} />
+        <NumberPad />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
