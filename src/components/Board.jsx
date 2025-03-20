@@ -4,7 +4,6 @@ const BoardContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(9, 50px);
   grid-template-rows: repeat(9, 50px);
-  gap: 2px;
 `;
 
 const Cell = styled.div`
@@ -32,6 +31,23 @@ const Cell = styled.div`
     background-color: #81aef8;
     color: white;
   `}
+
+  border-top: ${({ index }) =>
+    index < 9 ? "2px solid black" : "1px solid #ccc"};
+  border-left: ${({ index }) =>
+    index % 9 === 0 ? "2px solid black" : "1px solid #ccc"};
+  border-right: ${({ index }) =>
+    (index + 1) % 9 === 0
+      ? "2px solid black"
+      : index % 3 === 2
+      ? "2px solid black"
+      : "1px solid #ccc"};
+  border-bottom: ${({ index }) =>
+    index >= 72
+      ? "2px solid black"
+      : (index >= 18 && index < 27) || (index >= 45 && index < 54)
+      ? "2px solid black"
+      : "1px solid #ccc"};
 `;
 
 function Board({ board, selectCell }) {
@@ -40,6 +56,7 @@ function Board({ board, selectCell }) {
       {board.map((cell, index) => (
         <Cell
           key={index}
+          index={index}
           isFixed={cell.fixed}
           isSelected={cell.selected}
           onClick={() => !cell.fixed && selectCell(index)}
